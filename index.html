@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#163c78">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="12-Step">
+<link rel="manifest" href="manifest.webmanifest">
+<title>12-Step Companion</title>
+<style>
+:root{--bg:#07111f;--card:#0e1c30;--card2:#132743;--text:#f4f7fb;--muted:#aebbd0;--accent:#4e9af7;--border:#27415f;--danger:#df5b68}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#173b6e 0,#07111f 46%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:80px}
+header{position:sticky;top:0;z-index:10;background:rgba(7,17,31,.9);backdrop-filter:blur(16px);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:13px;box-shadow:0 6px 20px #0007}.brand{flex:1}.brand h1{font-size:18px;margin:0}.brand p{font-size:11px;color:var(--muted);margin:2px 0}
+main{padding:18px 16px}.screen{display:none}.screen.active{display:block}.hero{padding:22px;border:1px solid var(--border);background:linear-gradient(145deg,#102c4e,#0a1728);border-radius:22px;box-shadow:0 18px 40px #0004}
+h2{margin:0 0 8px;font-size:28px}.sub{color:var(--muted);line-height:1.5}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px}.stat{font-size:28px;font-weight:800}.label{color:var(--muted);font-size:12px}.btn{border:1px solid var(--border);background:var(--card2);color:var(--text);border-radius:14px;padding:12px 14px;font-weight:700}.btn.primary{background:var(--accent);color:#07111f;border-color:transparent}.btn.danger{background:#3b1720;border-color:#7d2d3a}.row{display:flex;gap:10px;flex-wrap:wrap}.list{display:grid;gap:10px;margin-top:14px}.step{display:flex;gap:12px;align-items:center}.stepno{width:42px;height:42px;border-radius:12px;background:#17365f;display:grid;place-items:center;font-weight:800;color:#bcdcff}.steptext{flex:1}.steptext strong{display:block}.steptext small{color:var(--muted)}textarea,input,select{width:100%;background:#091626;color:var(--text);border:1px solid var(--border);border-radius:14px;padding:13px;outline:none}textarea{min-height:150px;resize:vertical}.field{margin:12px 0}.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(7,17,31,.95);border-top:1px solid var(--border);display:flex;justify-content:center;z-index:20}.nav{max-width:760px;width:100%;display:grid;grid-template-columns:repeat(4,1fr)}.nav button{background:none;border:0;color:var(--muted);padding:10px 4px;font-size:11px}.nav button.active{color:#fff}.nav span{display:block;font-size:20px;margin-bottom:2px}.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#fff;color:#07111f;padding:10px 14px;border-radius:12px;font-weight:700;display:none;z-index:30}.theme-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.theme{min-height:70px;border-radius:16px;border:2px solid var(--border);padding:12px;text-align:left;color:#fff}.theme.blue{background:linear-gradient(135deg,#102c4e,#0a1728)}.theme.dark{background:#050505}.theme.sunset{background:linear-gradient(135deg,#572b45,#17213f)}.theme.green{background:linear-gradient(135deg,#123d35,#071a18)}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><img class="logo" src="icons/icon.svg" alt="12-Step Companion icon"><div class="brand"><h1>12-Step Companion</h1><p>Work the Steps. One day at a time.</p></div><button class="btn" id="installBtn" style="display:none">Install</button></header>
+<main>
+<section id="home" class="screen active">
+<div class="hero"><h2>Welcome back.</h2><p class="sub">Keep moving forward, one day and one step at a time.</p><div class="row"><button class="btn primary" onclick="show('steps')">Work the Steps</button><button class="btn" onclick="show('checkin')">Daily Check-In</button></div></div>
+<div class="grid">
+<div class="card"><div class="stat" id="soberDays">0</div><div class="label">Days sober</div></div>
+<div class="card"><div class="stat" id="checkinCount">0</div><div class="label">Check-ins</div></div>
+<div class="card"><div class="stat" id="meetCount">0</div><div class="label">Meetings</div></div>
+<div class="card"><div class="stat" id="stepCount">0/12</div><div class="label">Steps started</div></div>
+</div>
+<div class="card" style="margin-top:14px"><strong>Today's reminder</strong><p class="sub" id="dailyQuote">You don't have to do everything today. Just take the next right step.</p></div>
+</section>
+
+<section id="steps" class="screen"><h2>The 12 Steps</h2><p class="sub">Read the description, then open a Step to work it and save your reflection.</p><div id="stepList" class="list"></div></section>
+
+<section id="stepDetail" class="screen"><button class="btn" onclick="show('steps')">← Back to Steps</button><div class="hero" style="margin-top:12px"><h2 id="detailTitle"></h2><p class="sub" id="detailText"></p></div><div class="card" style="margin-top:14px"><strong>Your Step Work</strong><div class="field"><label>Reflection / notes</label><textarea id="stepNotes" placeholder="Write honestly. Your notes are saved on this device."></textarea></div><button class="btn primary" onclick="saveStep()">Save Step Work</button></div></section>
+
+<section id="checkin" class="screen"><h2>Daily Check-In</h2><p class="sub">A quick pause to be honest about today.</p><div class="card"><div class="field"><label>How am I feeling?</label><select id="mood"><option>Great</option><option>Good</option><option>Okay</option><option>Struggling</option><option>Need support</option></select></div><div class="field"><label>What am I grateful for?</label><textarea id="gratitude"></textarea></div><div class="field"><label>What do I need to be honest about today?</label><textarea id="honesty"></textarea></div><button class="btn primary" onclick="saveCheckin()">Save Check-In</button></div></section>
+
+<section id="meetings" class="screen"><h2>Meeting Tracker</h2><p class="sub">Keep a simple record of meetings attended or planned.</p><div class="card"><div class="field"><label>Meeting name</label><input id="meetingName"></div><div class="field"><label>Date</label><input id="meetingDate" type="date"></div><button class="btn primary" onclick="addMeeting()">Add Meeting</button></div><div id="meetingsList" class="list"></div></section>
+
+<section id="sponsor" class="screen"><h2>Sponsor / Sponsee</h2><p class="sub">Use this area to prepare step-work notes and questions to discuss with a sponsor. This test build keeps information on the device.</p><div class="card"><div class="field"><label>Sponsor name</label><input id="sponsorName"></div><div class="field"><label>Message / question for my sponsor</label><textarea id="sponsorMsg"></textarea></div><button class="btn primary" onclick="saveSponsor()">Save</button></div></section>
+
+<section id="themes" class="screen"><h2>Background Theme</h2><p class="sub">Choose the look that feels right for your recovery journey.</p><div class="theme-options"><button class="theme blue" onclick="theme('blue')">Ocean Blue</button><button class="theme dark" onclick="theme('dark')">Midnight</button><button class="theme sunset" onclick="theme('sunset')">Sunset</button><button class="theme green" onclick="theme('green')">Recovery Green</button></div></section>
+
+<section id="help" class="screen"><h2>Emergency Help</h2><p class="sub">If you are in immediate danger, call emergency services. This section is for connecting with crisis and recovery resources.</p><div class="list">
+<div class="card"><strong>988 Suicide & Crisis Lifeline</strong><p class="sub">Call or text <b>988</b>.</p><a class="btn danger" href="tel:988">Call 988</a></div>
+<div class="card"><strong>Crisis Text Line</strong><p class="sub">Text <b>HOME</b> to <b>741741</b>.</p><a class="btn" href="sms:741741?&body=HOME">Text HOME</a></div>
+<div class="card"><strong>SAMHSA National Helpline</strong><p class="sub">1-800-662-HELP (4357)</p><a class="btn" href="tel:18006624357">Call SAMHSA</a></div>
+</div></section>
+
+<section id="settings" class="screen"><h2>Settings</h2><div class="card"><strong>Sobriety Start Date</strong><div class="field"><input id="sobrietyDate" type="date"></div><button class="btn primary" onclick="saveSobriety()">Save Date</button></div><div class="card" style="margin-top:12px"><strong>Test Build</strong><p class="sub">12-Step Companion V4.1 • PWA cross-platform test build</p><button class="btn danger" onclick="resetData()">Reset local test data</button></div></section>
+</main>
+</div>
+<div class="bottom"><div class="nav">
+<button onclick="show('home')" data-nav="home"><span>⌂</span>Home</button>
+<button onclick="show('steps')" data-nav="steps"><span>①</span>Steps</button>
+<button onclick="show('checkin')" data-nav="checkin"><span>✓</span>Check-In</button>
+<button onclick="show('meetings')" data-nav="meetings"><span>▣</span>Meetings</button>
+</div></div><div id="toast" class="toast"></div>
+<script>
+const STEPS = [["Step 1", "We admitted we were powerless over alcohol\u2014that our lives had become unmanageable.", "Honesty begins the journey. Write what unmanageability has looked like in your life and what you are ready to stop fighting alone."], ["Step 2", "Came to believe that a Power greater than ourselves could restore us to sanity.", "Explore hope, willingness, and the possibility that recovery can be bigger than what you could accomplish alone."], ["Step 3", "Made a decision to turn our will and our lives over to the care of God as we understood Him.", "Write about control, trust, and what turning your will and life over means to you today."], ["Step 4", "Made a searching and fearless moral inventory of ourselves.", "Use this space to take an honest inventory of resentments, fears, relationships, harms, strengths, and patterns."], ["Step 5", "Admitted to God, to ourselves, and to another human being the exact nature of our wrongs.", "Prepare for honest sharing with a trusted person. Record what you are willing to face and discuss."], ["Step 6", "Were entirely ready to have God remove all these defects of character.", "Identify patterns you are willing to become ready to change. Focus on willingness rather than perfection."], ["Step 7", "Humbly asked Him to remove our shortcomings.", "Reflect on humility and the shortcomings you are asking for help with."], ["Step 8", "Made a list of all persons we had harmed, and became willing to make amends to them all.", "Record people and situations to discuss with your sponsor. Do not contact anyone impulsively; use guidance and safety."], ["Step 9", "Made direct amends to such people wherever possible, except when to do so would injure them or others.", "Track amends discussions and preparation with your sponsor. Consider accountability, safety, and appropriate timing."], ["Step 10", "Continued to take personal inventory and when we were wrong promptly admitted it.", "Use a daily inventory to notice behavior, repair mistakes, and keep recovery moving forward."], ["Step 11", "Sought through prayer and meditation to improve our conscious contact with God as we understood Him, praying only for knowledge of His will for us and the power to carry that out.", "Record reflections, gratitude, prayer, meditation, and what you believe your next right action is."], ["Step 12", "Having had a spiritual awakening as the result of these steps, we tried to carry this message to others and to practice these principles in all our affairs.", "Reflect on service, sharing recovery, and practicing the principles in everyday life."]];
+const KEY='tsc-v41';
+let data=JSON.parse(localStorage.getItem(KEY)||'{}'); data.stepNotes ||= {}; data.checkins ||= []; data.meetings ||= []; data.sponsor ||= {};
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block'});
+document.getElementById('installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').style.display='none'}};
+function save(){localStorage.setItem(KEY,JSON.stringify(data));updateStats()}
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.nav===id)); if(id==='steps')renderSteps(); if(id==='meetings')renderMeetings(); if(id==='settings')document.getElementById('sobrietyDate').value=data.sobrietyDate||''; window.scrollTo(0,0)}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+function renderSteps(){document.getElementById('stepList').innerHTML=STEPS.map((s,i)=>`<button class="card step" style="text-align:left;color:inherit" onclick="openStep(${i})"><div class="stepno">${i+1}</div><div class="steptext"><strong>${s[0]}</strong><small>${data.stepNotes[i]?'Saved reflection':'Ready to work'}</small></div><span>›</span></button>`).join('')}
+function openStep(i){data.currentStep=i;document.getElementById('detailTitle').textContent=STEPS[i][0];document.getElementById('detailText').textContent=STEPS[i][1]+' '+STEPS[i][2];document.getElementById('stepNotes').value=data.stepNotes[i]||'';show('stepDetail')}
+function saveStep(){let i=data.currentStep;data.stepNotes[i]=document.getElementById('stepNotes').value;save();toast('Step work saved');show('steps')}
+function saveCheckin(){data.checkins.push({date:new Date().toISOString(),mood:mood.value,gratitude:gratitude.value,honesty:honesty.value});save();toast('Check-In saved');gratitude.value='';honesty.value='';show('home')}
+function addMeeting(){if(!meetingName.value)return toast('Enter a meeting name');data.meetings.unshift({name:meetingName.value,date:meetingDate.value||new Date().toISOString().slice(0,10)});save();meetingName.value='';meetingDate.value='';toast('Meeting added');renderMeetings()}
+function renderMeetings(){meetingsList.innerHTML=data.meetings.map((m,i)=>`<div class="card"><strong>${escapeHtml(m.name)}</strong><p class="sub">${m.date}</p><button class="btn danger" onclick="data.meetings.splice(${i},1);save();renderMeetings()">Remove</button></div>`).join('')||'<div class="card"><span class="sub">No meetings recorded yet.</span></div>'}
+function saveSponsor(){data.sponsor={name:sponsorName.value,msg:sponsorMsg.value};save();toast('Sponsor notes saved')}
+function saveSobriety(){data.sobrietyDate=sobrietyDate.value;save();toast('Sobriety date saved')}
+function updateStats(){let d=0;if(data.sobrietyDate){let start=new Date(data.sobrietyDate+'T00:00:00');d=Math.max(0,Math.floor((Date.now()-start.getTime())/86400000)+1)}soberDays.textContent=d;checkinCount.textContent=data.checkins.length;meetCount.textContent=data.meetings.length;stepCount.textContent=Object.keys(data.stepNotes).length+'/12'}
+function theme(t){let vars={blue:['#07111f','#0e1c30','#132743','#4e9af7'],dark:['#050505','#111','#1d1d1d','#aaa'],sunset:['#171021','#2b1830','#3d2040','#d8799d'],green:['#061713','#0b2620','#123d35','#53c79a']}[t];document.documentElement.style.setProperty('--bg',vars[0]);document.documentElement.style.setProperty('--card',vars[1]);document.documentElement.style.setProperty('--card2',vars[2]);document.documentElement.style.setProperty('--accent',vars[3]);data.theme=t;save();toast('Theme changed')}
+function resetData(){if(confirm('Reset all local test data?')){localStorage.removeItem(KEY);location.reload()}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+if(data.theme)theme(data.theme); if(data.sponsor){sponsorName.value=data.sponsor.name||'';sponsorMsg.value=data.sponsor.msg||''} updateStats();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');
+</script></body></html>
