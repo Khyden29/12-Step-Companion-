@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="12-Step">
 <link rel="manifest" href="manifest.webmanifest">
-<title>12-Step Companion V4.2</title>
+<title>12-Step Companion V4.3 Beta</title>
 <style>
 :root{--bg:#07111f;--card:#0e1c30;--card2:#132743;--text:#f4f7fb;--muted:#aebbd0;--accent:#4e9af7;--border:#27415f;--danger:#df5b68;--scale:1}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#173b6e 0,#07111f 46%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:calc(16px * var(--scale));min-height:100vh}
@@ -81,7 +81,7 @@
 
 <section id="sponsor" class="screen"><h2 class="h2">Sponsor / Sponsee Portal</h2><p class="sub">This V4.2 portal remains a private workflow prototype. It does not yet send information between separate accounts.</p><div class="card"><div class="field"><label>My role</label><select id="role" onchange="savePortal()"><option value="sponsee">Sponsee</option><option value="sponsor">Sponsor</option></select></div><div class="field"><label>Connection code / invite</label><input id="inviteCode" placeholder="Example: 12SC-1234"></div><div class="row"><button class="btn primary" onclick="connectPortal()">Connect</button><button class="btn" onclick="savePortal()">Save</button></div><p id="connectionStatus" class="sub"></p></div><div class="card" style="margin-top:12px"><strong>Sharing permissions</strong><div class="setting"><div>Share Step Work<small>Allow selected Step Work to be shared when the secure portal is connected.</small></div><input id="shareSteps" type="checkbox" onchange="savePortal()"></div><div class="setting"><div>Share Check-Ins<small>Allow selected check-in information to be shared.</small></div><input id="shareCheckins" type="checkbox" onchange="savePortal()"></div></div><div class="card" style="margin-top:12px"><strong>Step Work to discuss</strong><div id="portalStepList" class="list"></div></div></section>
 
-<section id="settings" class="screen"><h2 class="h2">Settings</h2><p class="sub">Personalize your Companion and accessibility preferences.</p><div class="card"><div class="profile-preview"><div id="profileBig" class="profile-big">12</div><div><strong id="profileDisplay">Recovery Member</strong><p class="sub">Your profile is stored locally in this test build.</p></div></div><div class="field"><label>Display name</label><input id="displayName" maxlength="40" placeholder="Your name"></div><div class="field"><label>Profile picture</label><input id="profilePicture" type="file" accept="image/*" onchange="saveProfilePicture(this)"></div><button class="btn primary" onclick="saveProfile()">Save Profile</button></div><div class="card" style="margin-top:12px"><strong>Appearance & Accessibility</strong><div class="setting"><div>Theme<small>Choose the look of the Companion.</small></div><select id="themeSelect" onchange="setTheme(this.value)"><option value="blue">Ocean Blue</option><option value="dark">Midnight</option><option value="sunset">Sunset</option><option value="green">Recovery Green</option></select></div><div class="setting"><div>Text size<small>Adjust readability throughout the app.</small></div><select id="textSize" onchange="setTextSize(this.value)"><option value="0.9">Small</option><option value="1">Default</option><option value="1.15">Large</option><option value="1.3">Extra Large</option></select></div><div class="setting"><div>Reduce motion<small>Minimize visual motion.</small></div><input id="reduceMotion" type="checkbox" onchange="saveSettings()"></div></div><div class="card" style="margin-top:12px"><strong>Notifications</strong><div class="setting"><div>Recovery reminders<small>Request permission for browser notifications.</small></div><input id="notifications" type="checkbox" onchange="toggleNotifications(this.checked)"></div><div class="field"><label>Reminder preference</label><select id="reminderTime" onchange="saveSettings()"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div><p class="privacy">Browser notification support varies by device and browser. This test build does not send remote notifications yet.</p></div><div class="card" style="margin-top:12px"><strong>Language</strong><div class="field"><select id="language" onchange="setLanguage(this.value)"><option value="en">English</option><option value="es">Español</option></select></div><p class="privacy">V4.2 includes the language preference foundation. Full translated content will be added in a later localization pass.</p></div><div class="card" style="margin-top:12px"><strong>Test Build</strong><p class="sub">12-Step Companion V4.2 Beta • Daily Recovery Check-In</p><button class="btn danger" onclick="resetData()">Reset local test data</button></div></section>
+<section id="settings" class="screen"><h2 class="h2">Settings</h2><p class="sub">Personalize your Companion and accessibility preferences.</p><div class="card"><div class="profile-preview"><div id="profileBig" class="profile-big">12</div><div><strong id="profileDisplay">Recovery Member</strong><p class="sub">Your profile is stored locally in this test build.</p></div></div><div class="field"><label>Display name</label><input id="displayName" maxlength="40" placeholder="Your name"></div><div class="field"><label>Profile picture</label><input id="profilePicture" type="file" accept="image/*" onchange="saveProfilePicture(this)"></div><button class="btn primary" onclick="saveProfile()">Save Profile</button></div><div class="card" style="margin-top:12px"><strong>Appearance & Accessibility</strong><div class="setting"><div>Theme<small>Choose the look of the Companion.</small></div><select id="themeSelect" onchange="setTheme(this.value)"><option value="blue">Ocean Blue</option><option value="dark">Midnight</option><option value="sunset">Sunset</option><option value="green">Recovery Green</option></select></div><div class="setting"><div>Text size<small>Adjust readability throughout the app.</small></div><select id="textSize" onchange="setTextSize(this.value)"><option value="0.9">Small</option><option value="1">Default</option><option value="1.15">Large</option><option value="1.3">Extra Large</option></select></div><div class="setting"><div>Reduce motion<small>Minimize visual motion.</small></div><input id="reduceMotion" type="checkbox" onchange="saveSettings()"></div></div><div class="card" style="margin-top:12px"><strong>Notifications</strong><div class="setting"><div>Recovery reminders<small>Request permission for browser notifications.</small></div><input id="notifications" type="checkbox" onchange="toggleNotifications(this.checked)"></div><div class="field"><label>Reminder preference</label><select id="reminderTime" onchange="saveSettings()"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div><p class="privacy">Browser notification support varies by device and browser. This test build does not send remote notifications yet.</p></div><div class="card" style="margin-top:12px"><strong>Language</strong><div class="field"><select id="language" onchange="setLanguage(this.value)"><option value="en">English</option><option value="es">Español</option></select></div><p class="privacy">V4.2 includes the language preference foundation. Full translated content will be added in a later localization pass.</p></div><div class="card" style="margin-top:12px"><strong>Test Build</strong><p class="sub">12-Step Companion V4.3 Beta • Daily Recovery Check-In</p><button class="btn danger" onclick="resetData()">Reset local test data</button></div></section>
 
 <section id="help" class="screen"><h2 class="h2">Emergency Help</h2><p class="sub">If you are in immediate danger, call emergency services. This app does not replace professional or emergency support.</p><div class="list"><div class="card"><strong>988 Suicide & Crisis Lifeline</strong><p class="sub">Call or text 988.</p><a class="btn danger" href="tel:988">Call 988</a></div><div class="card"><strong>Crisis Text Line</strong><p class="sub">Text HOME to 741741.</p><a class="btn" href="sms:741741?&body=HOME">Text HOME</a></div><div class="card"><strong>SAMHSA National Helpline</strong><p class="sub">1-800-662-HELP (4357)</p><a class="btn" href="tel:18006624357">Call SAMHSA</a></div></div></section>
 </main>
@@ -106,12 +106,18 @@ const STEPS=[
 ["Step 12","Having had a spiritual awakening as the result of these steps, we tried to carry this message to others and to practice these principles in all our affairs.","Reflect on service, sharing recovery, and practicing the principles in everyday life."]
 ];
 
-const KEY='tsc-v41';
-let data=JSON.parse(localStorage.getItem(KEY)||'{}');
+const KEY='tsc-v43';
+const OLD_KEY='tsc-v41';
+let data=JSON.parse(localStorage.getItem(KEY)||'null');
+if(!data){
+  const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');
+  data=old||{};
+}
 data.stepNotes||={};data.checkins||=[];data.meetings||=[];
 data.portal||={role:'sponsee',inviteCode:'',connected:false,shareSteps:false,shareCheckins:false};
 data.settings||={theme:'blue',textSize:'1',reduceMotion:false,notifications:false,reminderTime:'Morning',language:'en'};
 data.profile||={name:'',picture:''};
+localStorage.setItem(KEY,JSON.stringify(data));
 
 let deferredPrompt=null;
 let currentCheckinMood='',currentCheckinMind='',currentCheckinTrigger=false,currentCheckinTriggers=[];
@@ -130,7 +136,7 @@ if(id==='steps')renderSteps();if(id==='meetings')renderMeetings();if(id==='sobri
 window.scrollTo(0,0)
 }
 
-function startDailyCheckIn(){resetCheckinForm();show('checkin')}
+function startDailyCheckIn(){show('checkin')}
 
 function pickMood(btn){currentCheckinMood=btn.dataset.mood;document.querySelectorAll('#moodChoices button').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')}
 function pickMind(btn){currentCheckinMind=btn.dataset.mind;document.querySelectorAll('#mindChoices button').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')}
@@ -207,9 +213,9 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 
 applySettings();applyProfile();updateStats();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
-setTimeout(()=>{const today=new Date().toISOString().slice(0,10);const last=data.lastDailyCheckin?data.lastDailyCheckin.slice(0,10):'';if(today!==last)startDailyCheckIn()},150);
+// V4.3 Daily Check-In controls first-open behavior.
 </script>
-  <script src="12-Step-Companion-V4.3-Daily-Check-In.js"></script>
+<script src="12-Step-Companion-V4.3-Daily-Check-In.js"></script>
+<script src="daily-checkin-v4.3.js"></script>
 </body>
 </html>
-
