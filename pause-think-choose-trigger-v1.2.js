@@ -21,34 +21,59 @@
     };
   }
 
-  function shouldPrompt(ctx) {
-    if (ctx.trigger === "Yes" && ctx.intensity >= MIN_TRIGGER_INTENSITY) {
-      return true;
-    }
-
-    if (
-      ctx.mood === "Struggling" ||
-      ctx.mood === "Not doing well"
-    ) {
-      return true;
-    }
-
-    if (
-      ctx.need === "I'm afraid I might relapse" ||
-      ctx.need === "I'm in crisis"
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  function addStyles() {
+  
     if (document.getElementById("ptcTriggerStyles")) return;
 
     const style = document.createElement("style");
     style.id = "ptcTriggerStyles";
+function shouldPrompt(ctx) {
+  const trigger = String(ctx.trigger || "").trim().toLowerCase();
+  const triggerType = String(ctx.triggerType || "").trim().toLowerCase();
+  const mood = String(ctx.mood || "").trim().toLowerCase();
+  const need = String(ctx.need || "").trim().toLowerCase();
 
+  const intensity = Number(ctx.intensity) || 0;
+
+  // Any meaningful indication that the user may be struggling.
+  const triggerDetected =
+    trigger === "yes" ||
+    trigger === "true";
+
+  const struggleMood =
+    mood === "struggling" ||
+    mood === "not doing well" ||
+    mood.includes("struggl") ||
+    mood.includes("not doing");
+
+  const relapseConcern =
+    need.includes("relapse") ||
+    need.includes("might relapse") ||
+    need.includes("afraid");
+
+  const crisisConcern =
+    need.includes("crisis") ||
+    need.includes("emergency") ||
+    need.includes("danger") ||
+    need.includes("unsafe");
+
+  const strongTrigger =
+    triggerDetected &&
+    intensity >= 5;
+
+  // PTC should be offered first whenever there is
+  // a meaningful indication of struggle.
+  if (
+    triggerDetected ||
+    struggleMood ||
+    relapseConcern ||
+    crisisConcern ||
+    strongTrigger
+  ) {
+    return true;
+  }
+
+  return false;
+}
     style.textContent = `
       #ptcTriggerPrompt {
         margin-top: 12px;
