@@ -136,7 +136,7 @@ if(id==='steps')renderSteps();if(id==='meetings')renderMeetings();if(id==='sobri
 window.scrollTo(0,0)
 }
 
-function startDailyCheckIn(){show('checkin')}
+function startDailyCheckIn(){resetCheckinForm();show('checkin')}
 
 function pickMood(btn){currentCheckinMood=btn.dataset.mood;document.querySelectorAll('#moodChoices button').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')}
 function pickMind(btn){currentCheckinMind=btn.dataset.mind;document.querySelectorAll('#mindChoices button').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')}
@@ -215,7 +215,6 @@ applySettings();applyProfile();updateStats();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 // V4.3 Daily Check-In controls first-open behavior.
 </script>
-<script src="12-Step-Companion-V4.3-Daily-Check-In.js"></script>
 <script src="daily-checkin-v4.3.js"></script>
 </body>
 </html>
