@@ -209,6 +209,7 @@ applySettings();applyProfile();updateStats();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
 setTimeout(()=>{const today=new Date().toISOString().slice(0,10);const last=data.lastDailyCheckin?data.lastDailyCheckin.slice(0,10):'';if(today!==last)startDailyCheckIn()},150);
 </script>
+  <script src="12-Step-Companion-V4.3-Daily-Check-In.js"></script>
 </body>
 </html>
 
