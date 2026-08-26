@@ -145,7 +145,7 @@ Install by adding this script after the existing app script in index.html:
       return;
     }
 
-    show("home");
+    document.getElementById("v43Support").style.display = "block";
   };
 
   window.v43Meeting = function () {
