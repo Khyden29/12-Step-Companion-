@@ -248,6 +248,28 @@
         trigger.__ptcTriggerBound = true;
     }
   }
+  // Direct bridge from Daily Check-In to Pause • Think • Choose
+window.ptcSyncWithCheckin = function () {
+    const trigger = document.getElementById("v43Trigger");
+    const section = document.getElementById("checkin");
+
+    if (!section) return;
+
+    const existing = document.getElementById("ptcCard");
+    const shouldShow = trigger && trigger.value === "Yes";
+
+    if (!shouldShow) {
+        if (existing) existing.remove();
+        return;
+    }
+
+    if (!existing) {
+        const card = createCard();
+        section.appendChild(card);
+    }
+
+    renderActions();
+};
   function readFields() {
     return {
       pause: document.getElementById("ptcPause")?.value.trim() || "",
