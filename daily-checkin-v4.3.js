@@ -109,11 +109,7 @@ Install by adding this script after the existing app script in index.html:
     renderV43Checkin();
     show("checkin");
 
-    setTimeout(function () {
-        if (typeof window.ptcSyncWithCheckin === "function") {
-            window.ptcSyncWithCheckin();
-        }
-    }, 0);
+    
 };
 
   window.v43ToggleTrigger = function () {
