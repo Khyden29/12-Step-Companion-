@@ -212,19 +212,42 @@
 
   function mount() {
     if (!window.data) return;
+
     addStyles();
     getData();
 
     const section = document.getElementById("checkin");
     if (!section) return;
 
-    if (!document.getElementById("ptcCard")) {
-      const card = createCard();
-      section.appendChild(card);
-    }
-    renderActions();
-  }
+    const trigger = document.getElementById("v43Trigger");
+    const existing = document.getElementById("ptcCard");
 
+    // Pause • Think • Choose is OFF unless the user
+    // has explicitly selected Trigger = Yes.
+    const shouldShow = trigger && trigger.value === "Yes";
+
+    if (!shouldShow) {
+        if (existing) existing.remove();
+        return;
+    }
+
+    // Trigger = Yes: create the PTC card if it isn't already there.
+    if (!existing) {
+        const card = createCard();
+        section.appendChild(card);
+    }
+
+    renderActions();
+
+    // Watch for the user changing Trigger between No and Yes.
+    if (trigger && !trigger.__ptcTriggerBound) {
+        trigger.addEventListener("change", function () {
+            setTimeout(mount, 0);
+        });
+
+        trigger.__ptcTriggerBound = true;
+    }
+  }
   function readFields() {
     return {
       pause: document.getElementById("ptcPause")?.value.trim() || "",
