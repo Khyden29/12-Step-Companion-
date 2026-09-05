@@ -74,7 +74,31 @@
 <div id="checkinResponse" style="display:none"></div>
 <div class="meeting-guide"><strong>Need a meeting?</strong><p class="sub">Quick access to Meeting Guide to find an A.A. meeting near you.</p><button class="btn primary" onclick="openMeetingGuide()">Find a Meeting</button></div>
 </section>
+<section id="ptc" class="screen">
+  <h2>Pause • Think • Choose</h2>
 
+  <div class="card">
+    <h3>🛑 PAUSE</h3>
+    <p>Stop for a moment. Take a breath. You don't have to react right now.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧠 THINK</h3>
+    <p>What am I feeling?</p>
+    <p>What triggered me?</p>
+    <p>What could happen if I act on this feeling?</p>
+  </div>
+
+  <div class="card">
+    <h3>❤️ CHOOSE</h3>
+    <p>What is the healthiest next choice I can make?</p>
+
+    <button class="btn" onclick="show('sponsor')">Call My Sponsor</button>
+    <button class="btn" onclick="show('meetings')">Find a Meeting</button>
+    <button class="btn" onclick="show('steps')">Go to Step Work</button>
+    <button class="btn" onclick="show('help')">I Need Help</button>
+  </div>
+</section>
 <section id="meetings" class="screen"><h2 class="h2">Meeting Tracker</h2><p class="sub">Track meetings planned and attended.</p><div class="card"><div class="field"><label>Meeting name</label><input id="meetingName"></div><div class="field"><label>Date</label><input id="meetingDate" type="date"></div><div class="field"><label>Status</label><select id="meetingStatus"><option value="planned">Planned</option><option value="attended">Attended</option></select></div><button class="btn primary" onclick="addMeeting()">Add Meeting</button></div><div class="meeting-guide"><strong>Find a meeting quickly</strong><p class="sub">Open the official Meeting Guide to search current A.A. meetings.</p><button class="btn primary" onclick="openMeetingGuide()">Open Meeting Guide</button></div><div id="meetingsList" class="list"></div></section>
 
 <section id="sobriety" class="screen"><h2 class="h2">Sobriety Tracker</h2><p class="sub">Your recovery date drives the day counter and milestone progress.</p><div class="card"><div class="stat" id="bigSoberDays">0 Days</div><p class="sub" id="soberSince">Set your sobriety date to begin.</p><div class="field"><label>Sobriety start date</label><input id="sobrietyDate" type="date"></div><div class="row"><button class="btn primary" onclick="saveSobriety()">Save Date</button><button class="btn danger" onclick="resetSobriety()">Reset Date</button></div></div><div class="card" style="margin-top:12px"><strong>Milestones</strong><div id="milestones" style="margin-top:10px"></div></div></section>
@@ -87,7 +111,8 @@
 </main>
 </div>
 
-<div class="bottom"><div class="nav"><button onclick="show('home')" data-nav="home"><span>⌂</span>Home</button><button onclick="show('steps')" data-nav="steps"><span>①</span>Steps</button><button onclick="show('checkin')" data-nav="checkin"><span>✓</span>Check-In</button><button onclick="show('meetings')" data-nav="meetings"><span>▣</span>Meetings</button><button onclick="show('settings')" data-nav="settings"><span>⚙</span>Settings</button></div></div>
+<div class="bottom"><div class="nav"><button onclick="show('ptc')" data-nav="ptc">
+<span>🛑</span>PTC</button><button onclick="show('home')" data-nav="home"><span>⌂</span>Home</button><button onclick="show('steps')" data-nav="steps"><span>①</span>Steps</button><button onclick="show('checkin')" data-nav="checkin"><span>✓</span>Check-In</button><button onclick="show('meetings')" data-nav="meetings"><span>▣</span>Meetings</button><button onclick="show('settings')" data-nav="settings"><span>⚙</span>Settings</button></div></div>
 <div id="toast" class="toast"></div>
 
 <script>
