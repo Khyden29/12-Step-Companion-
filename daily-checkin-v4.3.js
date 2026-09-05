@@ -138,6 +138,7 @@ Install by adding this script after the existing app script in index.html:
 
     save();
     toast("Daily Check-In saved");
+    if (window.PTC) window.PTC.update();
 
     if (trigger === "Yes" || need === "I need a meeting" ||
         need === "I need to talk to my sponsor" ||
